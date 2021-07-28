@@ -33,6 +33,23 @@ func FromDir(dir string) {
 	}
 }
 
+func FromDirs(dirs ...string) {
+	envs := make([]string, 0)
+	for _, dir := range dirs {
+		files, err := ioutil.ReadDir(dir)
+		if err != nil {
+			return
+		}
+		for _, f := range files {
+			envs = append(envs, fmt.Sprintf("%s/%s", dir, f.Name()))
+		}
+	}
+	err := godotenv.Load(envs...)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func FromUrl(url string) {
 	resp, err := http.Get(url)
 	if err != nil {
