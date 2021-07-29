@@ -34,17 +34,14 @@ func FromDir(dir string) {
 }
 
 func FromDirs(dirs ...string) {
-	envs := make([]string, 0)
+	envDirs := make([]string, 0)
 	for _, dir := range dirs {
-		files, err := ioutil.ReadDir(dir)
-		if err != nil {
-			return
-		}
+		files, _ := ioutil.ReadDir(dir)
 		for _, f := range files {
-			envs = append(envs, fmt.Sprintf("%s/%s", dir, f.Name()))
+			envDirs = append(envDirs, fmt.Sprintf("%s/%s", dir, f.Name()))
 		}
 	}
-	err := godotenv.Load(envs...)
+	err := godotenv.Load(envDirs...)
 	if err != nil {
 		panic(err)
 	}
