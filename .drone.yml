@@ -1,0 +1,14 @@
+kind: pipeline
+name: default
+
+trigger:
+  branch:
+    - master
+
+steps:
+  - name: docker
+    image: plugins/docker
+    dry_run: true
+    settings:
+      repo: registry.cityu-sro.hk:9443/sro-laundry-status
+      dockerfile: ./Dockerfile
